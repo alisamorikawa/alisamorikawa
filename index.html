@@ -1,0 +1,64 @@
+---
+layout: default
+title: Книги и авторский блог
+home: true
+---
+<section class="hero" aria-labelledby="name">
+  <div class="intro">
+    <p class="hero-label">Автор художественной прозы</p>
+    <h1 id="name"><img class="signature" src="{{ '/assets/author-signature.svg' | relative_url }}" width="651" height="361" alt="Алиса Морикава"></h1>
+    <p class="lede">Японские мотивы, вампирские легенды и тайны Балтики.</p>
+    <div class="actions">
+      <a class="primary" href="#books">К книгам <span aria-hidden="true">→</span></a>
+      <a class="secondary" href="#blog">Читать блог <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <img class="collage" src="{{ '/assets/author-collage.webp' | relative_url }}" width="1254" height="1254" alt="Алиса Морикава в бордовом бархатном платье в окружении пяти персонажей её книг" fetchpriority="high">
+</section>
+<section class="about" id="about" aria-labelledby="about-title" tabindex="-1">
+  <div class="quote-rule" aria-hidden="true"><img src="{{ '/assets/quote-fleuron.svg' | relative_url }}" alt="" width="36" height="15"></div>
+  <h2 id="about-title">Об авторе</h2>
+  <blockquote class="author-quote" id="author-quote" tabindex="-1">
+    <p>«Пишу социальный хоррор и мистику. Мне важно говорить о травматическом опыте, особенно женском. В своих историях я обращаюсь к сверхъестественному, чтобы говорить о том, что бывает трудно выразить словами».</p>
+  </blockquote>
+  <a class="section-link" href="#author-quote">Подробнее об авторе <span aria-hidden="true">→</span></a>
+</section>
+<div class="library">
+<section class="shelf" id="books" aria-labelledby="books-title" tabindex="-1">
+<div class="sectionhead"><h2 id="books-title">Книги</h2><span>Книга и сборники</span></div>
+<div class="covers">
+{% for book in site.data.books %}
+{% if book.excerpt_page %}
+<figure><a class="bookmat story-card" href="{{ book.excerpt_page | relative_url }}" aria-label="Читать фрагмент «{{ book.title | escape }}»"><img loading="lazy" src="assets/{{ book.image }}" alt="Обложка {% if book.edition %}сборника «{{ book.edition | escape }}»{% else %}книги «{{ book.title | escape }}»{% endif %}"></a><figcaption><h3><a href="{{ book.excerpt_page | relative_url }}">{{ book.title | escape }}</a></h3><a href="{{ book.excerpt_page | relative_url }}">Читать фрагмент →</a></figcaption></figure>
+{% else %}
+<figure><a class="bookmat" href="assets/{{ book.image }}" aria-label="Увеличить: Обложка «{{ book.title | escape }}»"><img loading="lazy" src="assets/{{ book.image }}" alt="Обложка «{{ book.title | escape }}»"><span class="zoom-icon" aria-hidden="true">⤢</span></a><figcaption><h3>{{ book.title | escape }}</h3>{% if book.store %}<a href="{{ book.store }}">У издателя ↗</a>{% endif %}</figcaption></figure>
+{% endif %}
+{% endfor %}</div></section>
+<dialog class="viewer" aria-labelledby="viewer-title">
+  <button class="dismiss" type="button" aria-label="Закрыть">×</button>
+  <img class="enlarged" alt="">
+  <h2 id="viewer-title"></h2>
+</dialog>
+<script defer src="assets/books.js"></script>
+<section class="blog" id="blog" aria-labelledby="blog-title" tabindex="-1">
+  <div class="sectionhead">
+    <h2 id="blog-title">Блог</h2>
+    {% if site.posts.size > 0 %}<a class="section-link" href="#posts">Все записи <span aria-hidden="true">→</span></a>{% endif %}
+  </div>
+  <div id="posts" tabindex="-1">
+    {% for post in site.posts %}
+    <article class="entry{% if post.image %} entry-illustrated{% endif %}">
+      {% if post.image %}
+      <img class="entry-image" src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: '' | escape }}" width="180" height="180" loading="lazy">
+      {% endif %}
+      <div class="entry-copy">
+        <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%d.%m.%Y" }}</time>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }} <span aria-hidden="true">→</span></a></h3>
+        <p>{{ post.description | escape }}</p>
+      </div>
+    </article>
+    {% else %}<p>Здесь появятся новые записи.</p>{% endfor %}
+  </div>
+</section>
+</div>
+<section class="section" id="contacts" aria-labelledby="contacts-title" tabindex="-1"><div class="sectionhead"><h2 id="contacts-title">Контакты</h2></div><div class="contacts"><div><h3>Telegram</h3><a href="https://t.me/{{ site.telegram }}">@{{ site.telegram }} ↗</a></div><div><h3>Электронная почта</h3>{% if site.email != '' %}<a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a>{% else %}<span>author@example.com <small>(пример)</small></span>{% endif %}</div></div></section>

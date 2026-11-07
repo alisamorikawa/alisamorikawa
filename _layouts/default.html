@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page.title | escape }} — {{ site.title | escape }}</title>
+  <meta name="description" content="{{ page.description | default: site.description | escape }}">
+  <meta property="og:title" content="{{ page.title | escape }} — {{ site.title | escape }}">
+  <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:image" content="{{ page.og_image | default: '/assets/mimari.jpg' | absolute_url }}">
+  {% if site.url != '' %}<link rel="canonical" href="{{ page.url | absolute_url }}"><meta property="og:url" content="{{ page.url | absolute_url }}">{% endif %}
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48 64x64" href="{{ '/assets/favicon.ico' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{{ '/assets/favicon-512.png' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/favicon-512.png' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}?v=author-home-1">
+  <script defer src="{{ '/assets/menu.js' | relative_url }}"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":{{ site.title | jsonify }},"sameAs":["https://t.me/{{ site.telegram }}"]},{"@type":"WebSite","name":{{ site.title | jsonify }},"inLanguage":"ru"}]}</script>
+</head>
+<body{% if page.home %} class="home"{% endif %}>
+<a class="skip" href="#main">К содержанию</a>
+<header><div class="mast wrap"><a class="brand" href="{{ '/' | relative_url }}" aria-label="На главную — Алиса Морикава"><img src="{{ '/assets/header-mark.png' | relative_url }}" width="96" height="60" alt=""></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>Меню</button>
+<nav id="site-nav" aria-label="Основное меню">
+  <a href="{{ '/' | relative_url }}#books">Книги</a>
+  <a href="{{ '/' | relative_url }}#blog">Блог</a>
+  <a href="{{ '/' | relative_url }}#about">Об авторе</a>
+  <a href="{{ '/' | relative_url }}#contacts">Контакты</a>
+</nav></div></header>
+<main id="main" class="wrap">{{ content }}</main>
+<footer class="wrap"><span>© {{ site.title }}</span><a href="#main">К началу ↑</a></footer>
+</body></html>

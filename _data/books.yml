@@ -1,0 +1,15 @@
+- title: "Истории о вампирах, рассказанные Мимари"
+  image: mimari.jpg
+  excerpt_page: mimari.html
+- title: "Теплая, Морская"
+  edition: "Багровые Иглы"
+  excerpt_page: teplaya-morskaya.html
+  image: bagrovye-igly.jpg
+- title: "Империя капибар"
+  edition: "Империя Капибар"
+  excerpt_page: chastota-strakha.html
+  image: imperiya-kapibar.jpg
+- title: "Стихия боли"
+  edition: "Стихия боли"
+  excerpt_page: granitsa.html
+  image: stihiya-boli.png
