@@ -150,6 +150,20 @@ figure { margin:0 }
     opacity:.52;
   }
 }
+/* Give the portrait more room on wide screens while the reading grid stays centered. */
+@media (min-width:1600px) {
+  .home { --portrait-shift:clamp(0px,calc((100vw - 1600px) / 3),128px) }
+  .home::before {
+    inset:0 0 auto auto;
+    width:min(240px,calc(var(--art-margin) - var(--portrait-shift) - var(--space-16)));
+    transform:scaleY(-1);
+  }
+  .collage {
+    position:relative;
+    inset-inline-start:var(--portrait-shift);
+    width:min(100%,clamp(525px,calc(525px + (100vw - 1600px) / 6),575px));
+  }
+}
 .zoom-icon { position:absolute; right:.5rem; bottom:.5rem; width:2rem; height:2rem; display:grid; place-items:center; border-radius:50%; background:var(--paper); color:var(--wine); font:1.5rem/1 var(--sans) }
 a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
 .viewer { background:transparent; color:white; border:0; overflow:visible; padding:0; width:min(94vw,660px); text-align:center }
