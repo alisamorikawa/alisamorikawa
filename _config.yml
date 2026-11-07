@@ -4,7 +4,7 @@ lang: ru
 url: "https://alisamorikawa.github.io"
 baseurl: "/alisamorikawa"
 telegram: morikawaalice
-email: ""
+email: "morikawaalisa@gmail.com"
 permalink: /blog/:year/:month/:day/:slug/
 plugins:
   - jekyll-sitemap

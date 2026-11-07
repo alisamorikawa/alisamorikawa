@@ -19,14 +19,40 @@ a:hover { text-decoration:underline }
 .wrap { width:min(calc(100% - 2 * var(--gutter)),1240px); margin-inline:auto }
 .home {
   --paper:#f8f5ef; --ink:#29211f; --wine:#752b3c; --line:#dcd0c5; --rose:#c49b9a;
+  --space-8:8px;
+  --space-16:16px;
+  --space-24:24px;
+  --space-32:32px;
+  --space-48:48px;
+  --space-64:64px;
+  --content-max:1200px;
+  --page-gutter:clamp(24px,4vw,32px);
+  --section-space:var(--space-48);
   position:relative;
   isolation:isolate;
 }
-.home .wrap { width:min(calc(100% - 2 * var(--gutter)),1320px) }
+/* The width cap applies to the content grid; the outer padding provides the gutter. */
+.home .wrap {
+  box-sizing:content-box;
+  width:auto;
+  max-width:var(--content-max);
+  margin-inline:auto;
+  padding-inline:var(--page-gutter);
+}
 .skip { position:absolute; top:0; left:1rem; transform:translateY(-150%); background:white; padding:8px; z-index:2 }
 .skip:focus { transform:none }
 .mast,nav,.brand,.actions,.sectionhead,footer { display:flex; align-items:center }
 .mast { min-height:82px; justify-content:space-between; border-bottom:1px solid var(--line) }
+.home .mast,.home footer { position:relative; border:0 }
+.home .mast::after,.home footer::before {
+  content:"";
+  position:absolute;
+  inset-inline:var(--page-gutter);
+  border-top:1px solid var(--line);
+  pointer-events:none;
+}
+.home .mast::after { inset-block-end:0 }
+.home footer::before { inset-block-start:0 }
 .brand { justify-content:center; width:96px; min-height:64px }
 .brand,nav a,.actions a,footer a,.entry a { text-decoration:none }
 nav { gap:clamp(18px,3vw,46px) }
@@ -37,15 +63,15 @@ nav a:hover { color:var(--wine) }
   display:grid;
   grid-template-columns:minmax(0,45fr) minmax(0,55fr);
   align-items:center;
-  gap:clamp(24px,4vw,60px);
-  padding:clamp(24px,3vw,44px) clamp(0px,3.6vw,56px) clamp(28px,3.5vw,50px);
+  gap:var(--space-32);
+  padding-block:var(--space-24) var(--space-32);
   position:relative;
 }
 .hero-label {
   display:flex;
   align-items:center;
-  gap:clamp(8px,1.5vw,18px);
-  margin:0 0 14px;
+  gap:var(--space-8);
+  margin:0 0 var(--space-16);
   color:var(--wine);
   font:600 clamp(11px,1vw,13px)/1.4 var(--serif);
   text-transform:uppercase;
@@ -61,9 +87,20 @@ nav a:hover { color:var(--wine) }
 .ruled::before { content:""; width:36px; height:1px; background:var(--wine) }
 h1,h2,h3 { font-family:var(--display); font-weight:600; margin:0; letter-spacing:normal; text-wrap:balance }
 .signature { display:block; width:min(100%,540px); height:auto }
-.lede { font:clamp(17px,1.5vw,21px)/1.6 var(--serif); max-width:31ch; margin:10px 0 24px }
-.actions { gap:12px 18px; flex-wrap:wrap }
-.actions a { display:inline-flex; align-items:center; justify-content:center; gap:12px; font-size:15px; min-height:46px }
+.lede { font:clamp(17px,1.5vw,21px)/1.6 var(--serif); max-width:31ch; margin:var(--space-8) 0 var(--space-24) }
+.actions { gap:var(--space-16); flex-wrap:wrap }
+.actions a {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--space-8);
+  font-size:15px;
+  min-height:48px;
+  padding:var(--space-8) var(--space-24);
+  border-width:1px;
+  border-style:solid;
+}
+.actions .primary { border-color:transparent }
 .primary { background:var(--wine); color:white; padding:12px 22px; border-radius:3px }
 .primary:hover { background:#582337 }
 .secondary { border:1px solid var(--wine); border-radius:3px; padding:10px 20px }
@@ -71,16 +108,21 @@ h1,h2,h3 { font-family:var(--display); font-weight:600; margin:0; letter-spacing
 figure { margin:0 }
 /* Fade only the outer edge of the original square image. */
 .collage {
-  display:block; width:min(100%,565px); height:auto; margin:auto;
+  display:block;
+  width:min(100%,clamp(360px,39vw,525px));
+  height:auto;
+  justify-self:end;
   mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent),
     linear-gradient(to bottom,transparent,#000 3%,#000 95%,transparent);
   mask-composite:intersect;
 }
-/* The supplied illustrations stay at the margins, behind the page. */
+/* Limit the illustrations to the outer margin so they cannot overlap the grid. */
 @media (min-width:1200px) {
-  .home .brand { margin-inline-start:clamp(75px,7.3vw,108px) }
-  .hero { padding:18px clamp(62px,6vw,90px) 24px }
-  .collage { width:min(100%,525px) }
+  .home {
+    --page-gutter:clamp(48px,4.45vw,var(--space-64));
+    --art-margin:max(var(--page-gutter), calc((100vw - var(--content-max)) / 2));
+  }
+  .hero { gap:var(--space-48); padding-block:var(--space-32) }
   .home::before,.hero::before {
     content:"";
     position:absolute;
@@ -89,16 +131,16 @@ figure { margin:0 }
     mix-blend-mode:multiply;
   }
   .home::before {
-    inset:-8px auto auto -12px;
-    width:clamp(160px,13vw,215px);
+    inset:0 auto auto 0;
+    width:min(184px,calc(var(--art-margin) - var(--space-8)));
     aspect-ratio:1200 / 728;
     background:url("sakura-branch.webp") center / contain no-repeat;
     transform:rotate(180deg);
     opacity:.72;
   }
   .hero::before {
-    inset:auto auto 4px calc(-1.23 * var(--gutter));
-    width:clamp(150px,15vw,218px);
+    inset:auto calc(100% + var(--space-8)) var(--space-8) auto;
+    width:min(200px,calc(var(--art-margin) - var(--space-8)));
     aspect-ratio:1;
     background:url("coastal-lighthouse.webp") center / contain no-repeat;
     mask-image:linear-gradient(to right,#000 24%,transparent 96%),
@@ -121,14 +163,14 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
   display:grid;
   grid-template-columns:auto minmax(0,1fr) auto;
   align-items:center;
-  gap:24px clamp(24px,3vw,50px);
-  padding-bottom:clamp(28px,3vw,46px);
+  gap:var(--space-32);
+  padding-bottom:var(--space-32);
 }
 .home h2 { color:var(--wine) }
-.author-quote { margin:0; border-inline-start:1px solid var(--rose); padding-inline-start:clamp(22px,3vw,45px) }
+.author-quote { margin:0; border-inline-start:1px solid var(--rose); padding-inline-start:var(--space-24) }
 .author-quote p { margin:0; max-width:68ch; font:italic 17px/1.65 var(--serif); text-wrap:pretty }
 .section-link { font-size:15px; text-underline-offset:5px; padding-block:10px }
-.about > .section-link { justify-self:end }
+.about > .section-link { justify-self:start }
 .about .quote-rule { grid-column:1/-1 }
 .quote-rule { display:flex; align-items:center; justify-content:center; gap:9px; color:var(--wine) }
 .quote-rule::before,.quote-rule::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),var(--rose)) }
@@ -139,62 +181,76 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
   .actions a:hover span,.actions a:focus-visible span { translate:3px 0 }
 }
 .section { padding:var(--section) 0; border-top:1px solid var(--line) }
-.sectionhead { gap:12px 20px; flex-wrap:wrap; justify-content:space-between; margin-bottom:22px }
+.home .section { padding-block:var(--section-space) }
+.sectionhead {
+  gap:var(--space-8) var(--space-16);
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:var(--space-24);
+}
 h2 { font-size:var(--heading-size); line-height:1.1; letter-spacing:normal }
 .sectionhead>span { color:var(--muted); font:italic 15px/1.65 var(--serif) }
 .library {
   display:grid;
-  gap:clamp(28px,3vw,45px);
+  gap:var(--section-space);
   border-top:1px solid var(--line);
-  padding-block:clamp(24px,3vw,44px) var(--section);
+  padding-block:var(--section-space);
 }
 @media (min-width:1200px) {
-  .library { grid-template-columns:minmax(0,59fr) minmax(0,41fr) }
-  .blog { border-inline-start:1px solid var(--line); padding-inline-start:clamp(24px,3vw,44px) }
+  .library { grid-template-columns:minmax(0,59fr) minmax(0,41fr); gap:0 }
+  .shelf { padding-inline-end:var(--space-32) }
+  .blog { border-inline-start:1px solid var(--line); padding-inline-start:var(--space-32) }
 }
 @media (max-width:1199px) {
-  .blog { border-top:1px solid var(--line); padding-top:clamp(24px,3vw,44px) }
+  .blog { border-top:1px solid var(--line); padding-top:var(--section-space) }
 }
-.covers { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(14px,1.5vw,24px) }
+.covers { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--space-24) var(--space-16) }
 .covers > figure { display:flex; flex-direction:column; min-width:0 }
 .covers figcaption { display:flex; flex-direction:column; flex:1 }
-.covers figcaption > a { align-self:flex-start; margin-top:auto; padding-top:8px }
-.bookmat { display:grid; position:relative; width:100%; flex:none; place-items:center; aspect-ratio:.9; background:#eee5d9 }
+.covers figcaption > a { align-self:flex-start; margin-top:auto; padding-top:var(--space-16) }
+.bookmat { display:grid; position:relative; width:100%; flex:none; place-items:center; aspect-ratio:1; background:#eee5d9 }
 .covers figure:nth-child(2) .bookmat { background:#ede2e1 }
 .covers figure:nth-child(3) .bookmat { background:#e8e8dc }
 .covers figure:nth-child(4) .bookmat { background:#e3e8e8 }
 .bookmat img { position:absolute; inset:9% 12%; height:82%; width:76%; object-fit:contain; transition:transform var(--motion) }
 .bookmat:hover img { transform:translateY(-3px) }
-.covers h3 { font-size:clamp(22px,1.75vw,25px); font-weight:500; line-height:1.2; text-wrap:pretty; margin:12px 0 6px }
+.covers h3 { font-size:clamp(22px,1.75vw,25px); font-weight:500; line-height:1.2; text-wrap:pretty; margin:var(--space-16) 0 0; overflow-wrap:anywhere }
 .covers figcaption > a { font-size:14px }
 small,time { font-size:15px }
-.entry { display:grid; gap:clamp(14px,2vw,26px); align-items:start }
-.entry-illustrated { grid-template-columns:minmax(0,clamp(124px,12vw,180px)) minmax(0,1fr) }
-.entry + .entry { border-top:1px solid var(--line); margin-top:22px; padding-top:22px }
+.entry { display:grid; gap:var(--space-24); align-items:start }
+.entry-illustrated { grid-template-columns:minmax(0,clamp(124px,11vw,160px)) minmax(0,1fr) }
+.entry + .entry { border-top:1px solid var(--line); margin-top:var(--space-24); padding-top:var(--space-24) }
 .entry-image { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:cover }
+.entry-copy { display:grid; gap:var(--space-8); align-content:start }
 .entry time,.entry p,small { color:var(--muted) }
-.entry h3 { font-size:var(--article-size); line-height:1.1; text-wrap:pretty; margin-top:5px }
+.entry h3 { font-size:var(--article-size); line-height:1.1; text-wrap:pretty }
 .entry h3 a:hover { text-decoration:underline }
 .entry h3 span { font:16px/1 var(--serif); white-space:nowrap }
-.entry p { margin:9px 0 0 }
-.contacts { display:flex; gap:clamp(36px,10vw,140px); flex-wrap:wrap }
-.contacts h3 { font-size:var(--book-size); margin-bottom:8px }
+.entry p { margin:0; max-width:50ch }
+.contacts { display:grid; grid-template-columns:repeat(2,minmax(0,280px)); gap:var(--space-24) var(--space-48) }
+.contacts h3 { font-size:var(--book-size); margin-bottom:var(--space-8) }
+.contacts a { overflow-wrap:anywhere }
 footer { border-top:1px solid var(--line); justify-content:space-between; padding:24px 0; font-size:15px }
 .reading { max-width:66ch; margin:var(--section) auto; min-height:45vh; overflow-wrap:anywhere }
 .reading h1 { font-size:var(--article-size); line-height:1.1 }
 .reading p:not(.eyebrow) { font:17px/1.65 var(--serif) }
 .reading img { max-width:100%; height:auto }.reading pre { overflow:auto }
 .back { display:inline-block; margin-bottom:24px }
-@media (max-width:900px) {
-  .covers { grid-template-columns:repeat(2,minmax(0,1fr)) }
-  .about { grid-template-columns:auto minmax(0,1fr); row-gap:18px }
+@media (max-width:1023px) {
+  .about { grid-template-columns:auto minmax(0,1fr); gap:var(--space-16) var(--space-24) }
   .about > .section-link { grid-column:2; justify-self:start }
 }
-@media (min-width:501px) and (max-width:900px) {
-  .bookmat { aspect-ratio:1.2 }
+@media (min-width:768px) and (max-width:1023px) {
+  .about > .section-link { margin-inline-start:calc(var(--space-24) + 1px) }
+}
+@media (max-width:900px) {
+  .actions a { padding-inline:var(--space-16) }
 }
 @media (max-width:767px) {
+  .home { --page-gutter:clamp(16px,4.8vw,20px); --section-space:var(--space-32) }
   .mast { flex-wrap:wrap; min-height:68px; gap:0 12px; padding:4px 0 }
+  .home .mast { padding-block:0 }
   .brand { width:84px; min-height:59px }
   .brand img { width:100%; height:auto }
   .menu-toggle:not([hidden]) {
@@ -211,16 +267,17 @@ footer { border-top:1px solid var(--line); justify-content:space-between; paddin
   .menu-toggle:not([hidden])[aria-expanded="false"] + nav { display:none }
   .mast nav { flex:1 0 100%; flex-wrap:wrap; gap:0 18px; padding:4px 0 10px }
   .mast nav a { min-height:44px }
-  .hero { grid-template-columns:1fr; gap:20px; padding:28px 0 18px }
-  .collage { width:min(100%,470px) }
-  .about { grid-template-columns:1fr; gap:14px }
-  .author-quote { padding-inline-start:16px }
+  .hero { grid-template-columns:1fr; gap:var(--space-24); padding-block:var(--space-24) }
+  .collage { width:min(100%,470px); justify-self:center }
+  .about { grid-template-columns:1fr; gap:var(--space-16) }
+  .author-quote { padding-inline-start:var(--space-16) }
   .about > .section-link { grid-column:auto }
-  .contacts { gap:22px; flex-direction:column }
+  .covers { grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .contacts { grid-template-columns:1fr }
 }
 @media (max-width:500px) {
   .home { --heading-size:clamp(36px,10vw,42px); --article-size:clamp(27px,8vw,30px) }
-  .actions a { padding-inline:12px }
+  .entry { gap:var(--space-16) }
   .entry-illustrated { grid-template-columns:minmax(0,92px) minmax(0,1fr) }
 }
 @media (max-width:350px) {
