@@ -143,7 +143,8 @@ figure { margin:0 }
     width:min(200px,calc(var(--art-margin) - var(--space-8)));
     aspect-ratio:1;
     background:url("coastal-lighthouse.webp") center / contain no-repeat;
-    mask-image:linear-gradient(to right,#000 24%,transparent 96%),
+    mask-image:linear-gradient(to right,transparent,rgb(0 0 0 / 8%) 5%,
+      rgb(0 0 0 / 38%) 13%,rgb(0 0 0 / 72%) 22%,#000 33%,transparent 96%),
       linear-gradient(to bottom,transparent,#000 24%,#000 73%,transparent);
     mask-composite:intersect;
     opacity:.52;
