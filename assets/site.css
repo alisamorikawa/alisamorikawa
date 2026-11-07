@@ -43,15 +43,15 @@ a:hover { text-decoration:underline }
 .skip:focus { transform:none }
 .mast,nav,.brand,.actions,.sectionhead,footer { display:flex; align-items:center }
 .mast { min-height:82px; justify-content:space-between; border-bottom:1px solid var(--line) }
-.home .mast,.home footer { position:relative; border:0 }
-.home .mast::after,.home footer::before {
+.home .mast { border:0 }
+.home footer { position:relative; border:0 }
+.home footer::before {
   content:"";
   position:absolute;
   inset-inline:var(--page-gutter);
   border-top:1px solid var(--line);
   pointer-events:none;
 }
-.home .mast::after { inset-block-end:0 }
 .home footer::before { inset-block-start:0 }
 .brand { justify-content:center; width:96px; min-height:64px }
 .brand,nav a,.actions a,footer a,.entry a { text-decoration:none }
@@ -161,7 +161,6 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
     min-height:var(--front-header);
     padding-inline:0;
   }
-  .home .mast::after { inset-inline:clamp(96px,10vw,150px) max(-7cqw,-128px) }
   .home .brand { min-height:var(--front-header) }
   .home .brand img { height:auto; max-height:var(--front-header); object-fit:contain }
   .frontispiece { position:relative }
