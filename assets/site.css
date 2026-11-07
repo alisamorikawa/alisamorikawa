@@ -116,53 +116,8 @@ figure { margin:0 }
     linear-gradient(to bottom,transparent,#000 3%,#000 95%,transparent);
   mask-composite:intersect;
 }
-/* Limit the illustrations to the outer margin so they cannot overlap the grid. */
 @media (min-width:1200px) {
-  .home {
-    --page-gutter:clamp(48px,4.45vw,var(--space-64));
-    --art-margin:max(var(--page-gutter), calc((100vw - var(--content-max)) / 2));
-  }
-  .hero { gap:var(--space-48); padding-block:var(--space-32) }
-  .home::before,.hero::before {
-    content:"";
-    position:absolute;
-    pointer-events:none;
-    z-index:-1;
-    mix-blend-mode:multiply;
-  }
-  .home::before {
-    inset:0 auto auto 0;
-    width:min(184px,calc(var(--art-margin) - var(--space-8)));
-    aspect-ratio:1200 / 728;
-    background:url("sakura-branch.webp") center / contain no-repeat;
-    transform:rotate(180deg);
-    opacity:.72;
-  }
-  .hero::before {
-    inset:auto calc(100% + var(--space-8)) var(--space-8) auto;
-    width:min(200px,calc(var(--art-margin) - var(--space-8)));
-    aspect-ratio:1;
-    background:url("coastal-lighthouse.webp") center / contain no-repeat;
-    mask-image:linear-gradient(to right,transparent,rgb(0 0 0 / 8%) 5%,
-      rgb(0 0 0 / 38%) 13%,rgb(0 0 0 / 72%) 22%,#000 33%,transparent 96%),
-      linear-gradient(to bottom,transparent,#000 24%,#000 73%,transparent);
-    mask-composite:intersect;
-    opacity:.52;
-  }
-}
-/* Give the portrait more room on wide screens while the reading grid stays centered. */
-@media (min-width:1600px) {
-  .home { --portrait-shift:clamp(0px,calc((100vw - 1600px) / 3),128px) }
-  .home::before {
-    inset:0 0 auto auto;
-    width:min(240px,calc(var(--art-margin) - var(--portrait-shift) - var(--space-16)));
-    transform:scaleY(-1);
-  }
-  .collage {
-    position:relative;
-    inset-inline-start:var(--portrait-shift);
-    width:min(100%,clamp(525px,calc(525px + (100vw - 1600px) / 6),575px));
-  }
+  .home { --page-gutter:clamp(48px,4.45vw,var(--space-64)) }
 }
 .zoom-icon { position:absolute; right:.5rem; bottom:.5rem; width:2rem; height:2rem; display:grid; place-items:center; border-radius:50%; background:var(--paper); color:var(--wine); font:1.5rem/1 var(--sans) }
 a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
@@ -191,6 +146,84 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
 .quote-rule::before,.quote-rule::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),var(--rose)) }
 .quote-rule::after { transform:scaleX(-1) }
 .quote-rule img { display:block; width:36px; height:15px }
+/* The painted frontispiece spans the header, hero and author's introduction. */
+@media (min-width:1024px) {
+  .home {
+    container-type:inline-size;
+    --front-header:clamp(56px,4.3vw,82px);
+    --front-width:min(79cqw,1500px);
+    --intro-indent:clamp(32px,6vw,96px);
+  }
+  .home .mast {
+    box-sizing:border-box;
+    width:var(--front-width);
+    max-width:none;
+    min-height:var(--front-header);
+    padding-inline:0;
+  }
+  .home .mast::after { inset-inline:clamp(96px,10vw,150px) max(-7cqw,-128px) }
+  .home .brand { min-height:var(--front-header) }
+  .home .brand img { height:auto; max-height:var(--front-header); object-fit:contain }
+  .frontispiece { position:relative }
+  .frontispiece::before {
+    content:"";
+    position:absolute;
+    z-index:-1;
+    pointer-events:none;
+    inset:calc(-1 * var(--front-header)) auto 0 50%;
+    width:min(100cqw,2100px);
+    translate:-50% 0;
+    background:url("frontispiece-watercolor.webp") center / 100% 100% no-repeat;
+    mask-image:linear-gradient(#000 88%,transparent);
+    opacity:.84;
+  }
+  .frontispiece > :is(.hero,.about) {
+    width:var(--front-width);
+    margin-inline:calc((100% - var(--front-width)) / 2);
+  }
+  .frontispiece .hero {
+    grid-template-columns:minmax(0,46fr) minmax(0,54fr);
+    gap:var(--space-24);
+    padding-block:var(--space-8) var(--space-16);
+  }
+  .frontispiece .hero-label {
+    gap:var(--space-16);
+    margin:0 0 var(--space-8) var(--space-32);
+    letter-spacing:.18em;
+  }
+  .frontispiece .hero-label::after { flex:1; max-width:42px }
+  .frontispiece .signature { width:min(100%,clamp(325px,32.5vw,620px)) }
+  .frontispiece .lede {
+    margin-inline-start:var(--intro-indent);
+    margin-block-end:var(--space-16);
+    max-width:38ch;
+    line-height:1.4;
+  }
+  .frontispiece .actions { margin-inline-start:var(--intro-indent) }
+  .frontispiece .actions a {
+    min-inline-size:clamp(128px,13.4vw,220px);
+    padding-inline:clamp(16px,1.6vw,24px);
+  }
+  .frontispiece .collage {
+    justify-self:center;
+    width:min(100%,33vw,640px);
+    mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent),
+      linear-gradient(to bottom,transparent,#000 4%,#000 91%,transparent);
+  }
+  .frontispiece .about {
+    grid-template-columns:minmax(0,21%) minmax(0,1fr) auto;
+    padding-bottom:var(--space-24);
+  }
+  .frontispiece .about h2 { white-space:nowrap }
+  .frontispiece .quote-rule { justify-self:center; width:min(92cqw,1850px) }
+}
+@media (min-width:2101px) {
+  .frontispiece::before {
+    mask-image:linear-gradient(#000 88%,transparent),
+      linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);
+    mask-composite:intersect;
+  }
+}
 @media (prefers-reduced-motion:no-preference) {
   .actions a span { transition:translate .25s ease }
   .actions a:hover span,.actions a:focus-visible span { translate:3px 0 }
