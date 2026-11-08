@@ -175,11 +175,9 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
     mask-image:linear-gradient(#000 88%,transparent);
     opacity:.84;
   }
-  .frontispiece > :is(.hero,.about) {
+  .frontispiece .hero {
     width:var(--front-width);
     margin-inline:calc((100% - var(--front-width)) / 2);
-  }
-  .frontispiece .hero {
     grid-template-columns:minmax(0,46fr) minmax(0,54fr);
     gap:var(--space-24);
     padding-block:var(--space-8) var(--space-16);
@@ -213,7 +211,6 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
     padding-bottom:var(--space-24);
   }
   .frontispiece .about h2 { white-space:nowrap }
-  .frontispiece .quote-rule { justify-self:center; width:min(92cqw,1850px) }
 }
 @media (min-width:2101px) {
   .frontispiece::before {
