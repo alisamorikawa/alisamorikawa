@@ -52,7 +52,11 @@ bundle exec jekyll serve --host 127.0.0.1
 
 Публикуемый проект находится в папке `writer-blog`. У неё свой Git-репозиторий с удалённым адресом [alisamorikawa/alisamorikawa](https://github.com/alisamorikawa/alisamorikawa). Файлы из родительской папки и статическая копия `preview` не участвуют в публикации.
 
-При первой настройке после отправки ветки `main` откройте **Settings → Pages → Build and deployment**. Выберите **Deploy from a branch**, затем **main** и **/(root)**. Нажмите **Save**. GitHub сам соберёт Jekyll. За ходом публикации можно следить во вкладке **Actions**. Адрес сайта указан в настройках Pages. Для этого репозитория ожидается [alisamorikawa.github.io/alisamorikawa/](https://alisamorikawa.github.io/alisamorikawa/).
+В **Settings → Pages → Build and deployment** выбраны **Deploy from a branch**, ветка **main** и папка **/(root)**. GitHub сам собирает Jekyll. За ходом публикации можно следить во вкладке **Actions**.
+
+Адрес сайта — [morikawaalisa.ru](https://morikawaalisa.ru/). В `_config.yml` домен указан в `url`, а `baseurl` оставлен пустым, поскольку сайт открывается из корня домена. Файл `CNAME` в корне ветки `main` содержит только `morikawaalisa.ru`. Сохраняйте его в репозитории при обновлениях, чтобы GitHub Pages сохранял настройку **Custom domain**.
+
+После настройки DNS дождитесь успешной проверки домена в **Settings → Pages**. Когда GitHub выпустит сертификат и адрес откроется по HTTPS, включите **Enforce HTTPS**.
 
 Для обновлений редактируйте файлы в `writer-blog`. Сохраните изменения коммитом и отправьте его в `main`. GitHub Pages запустит сборку автоматически. Новую запись также можно добавить на GitHub в папке `_posts` через **Add file → Create new file** и сохранить в `main`.
 

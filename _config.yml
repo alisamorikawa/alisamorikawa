@@ -1,8 +1,8 @@
 title: Алиса Морикава
 description: Официальный сайт писательницы Алисы Морикавы. Мистические триллеры, психологический хоррор, книги и авторский блог.
 lang: ru
-url: "https://alisamorikawa.github.io"
-baseurl: "/alisamorikawa"
+url: "https://morikawaalisa.ru"
+baseurl: ""
 telegram: morikawaalice
 email: "morikawaalisa@gmail.com"
 permalink: /blog/:year/:month/:day/:slug/
