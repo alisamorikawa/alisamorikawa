@@ -131,7 +131,7 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
 /* The ornament spans the full width; the quote sits in its own reading column. */
 .about {
   display:grid;
-  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-columns:auto minmax(0,1fr);
   align-items:center;
   gap:var(--space-32);
   padding-bottom:var(--space-32);
@@ -140,7 +140,6 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
 .author-quote { margin:0; border-inline-start:1px solid var(--rose); padding-inline-start:var(--space-24) }
 .author-quote p { margin:0; max-width:68ch; font:italic 17px/1.65 var(--serif); text-wrap:pretty }
 .section-link { font-size:15px; text-underline-offset:5px; padding-block:10px }
-.about > .section-link { justify-self:start }
 .about .quote-rule { grid-column:1/-1 }
 .quote-rule { display:flex; align-items:center; justify-content:center; gap:9px; color:var(--wine) }
 .quote-rule::before,.quote-rule::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),var(--rose)) }
@@ -210,7 +209,7 @@ a.bookmat { position:relative; cursor:zoom-in; text-decoration:none }
       linear-gradient(to bottom,transparent,#000 4%,#000 91%,transparent);
   }
   .frontispiece .about {
-    grid-template-columns:minmax(0,21%) minmax(0,1fr) auto;
+    grid-template-columns:minmax(0,21%) minmax(0,1fr);
     padding-bottom:var(--space-24);
   }
   .frontispiece .about h2 { white-space:nowrap }
@@ -286,10 +285,6 @@ footer { border-top:1px solid var(--line); justify-content:space-between; paddin
 .back { display:inline-block; margin-bottom:24px }
 @media (max-width:1023px) {
   .about { grid-template-columns:auto minmax(0,1fr); gap:var(--space-16) var(--space-24) }
-  .about > .section-link { grid-column:2; justify-self:start }
-}
-@media (min-width:768px) and (max-width:1023px) {
-  .about > .section-link { margin-inline-start:calc(var(--space-24) + 1px) }
 }
 @media (max-width:900px) {
   .actions a { padding-inline:var(--space-16) }
@@ -318,7 +313,6 @@ footer { border-top:1px solid var(--line); justify-content:space-between; paddin
   .collage { width:min(100%,470px); justify-self:center }
   .about { grid-template-columns:1fr; gap:var(--space-16) }
   .author-quote { padding-inline-start:var(--space-16) }
-  .about > .section-link { grid-column:auto }
   .covers { grid-template-columns:repeat(2,minmax(0,1fr)) }
   .contacts { grid-template-columns:1fr }
 }
