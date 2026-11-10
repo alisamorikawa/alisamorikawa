@@ -32,7 +32,7 @@ home: true
 {% if book.excerpt_page %}
 <figure><a class="bookmat story-card" href="{{ book.excerpt_page | relative_url }}" aria-label="Читать фрагмент «{{ book.title | escape }}»"><img loading="lazy" src="assets/{{ book.image }}" alt="Обложка {% if book.edition %}сборника «{{ book.edition | escape }}»{% else %}книги «{{ book.title | escape }}»{% endif %}"></a><figcaption><h3><a href="{{ book.excerpt_page | relative_url }}">{{ book.title | escape }}</a></h3><a href="{{ book.excerpt_page | relative_url }}">Читать фрагмент →</a></figcaption></figure>
 {% else %}
-<figure><a class="bookmat" href="assets/{{ book.image }}" aria-label="Увеличить: Обложка «{{ book.title | escape }}»"><img loading="lazy" src="assets/{{ book.image }}" alt="Обложка «{{ book.title | escape }}»"><span class="zoom-icon" aria-hidden="true">⤢</span></a><figcaption><h3>{{ book.title | escape }}</h3>{% if book.store %}<a href="{{ book.store }}">У издателя ↗</a>{% endif %}</figcaption></figure>
+<figure><a class="bookmat" href="assets/{{ book.image }}" aria-label="Увеличить: Обложка «{{ book.title | escape }}»"><img loading="lazy" src="assets/{{ book.image }}" alt="Обложка «{{ book.title | escape }}»"><span class="zoom-icon" aria-hidden="true">⤢</span></a><figcaption><h3>{{ book.title | escape }}</h3>{% if book.store %}<a href="{{ book.store }}" target="_blank" rel="noopener">У издателя ↗</a>{% endif %}</figcaption></figure>
 {% endif %}
 {% endfor %}</div></section>
 <dialog class="viewer" aria-labelledby="viewer-title">
